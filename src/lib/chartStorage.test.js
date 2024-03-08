@@ -4,11 +4,9 @@
 
 // code taken from lecture example
 
-//require("whatwg-fetch")
 const fs = require("fs")
 const domTesting = require('@testing-library/dom')
 require('@testing-library/jest-dom')
-//const userEvent = require("@testing-library/user-event").default
 
 function initDomFromFiles(htmlPath, jsPath) {
 	const html = fs.readFileSync(htmlPath, 'utf8')
@@ -19,7 +17,7 @@ function initDomFromFiles(htmlPath, jsPath) {
 		require(jsPath)
 	})
 }
-
+// clear localStorage after each test
 beforeEach(() => {
     window.localStorage.clear()
 })
@@ -41,6 +39,25 @@ test("chart saved to localStorage", function(){
     expect(savedChart).toContain("testchart")    
 })
 
+// test that saveChart stores consecutive charts to the end of the array
+test("consecutive charts saved to end of array", function(){
+    // arrange:
+    initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
+
+    // act:    	
+    saveChart("testchart0")
+    saveChart("testchart1")
+    saveChart("testchart2")
+    saveChart("testchart3")
+
+    // assert that 'testchart0-3' is in the array of charts
+    const savedChart = window.localStorage.getItem("savedCharts")
+    expect(savedChart).toContain("testchart0")  
+    expect(savedChart).toContain("testchart1")
+    expect(savedChart).toContain("testchart2")
+    expect(savedChart).toContain("testchart3")  
+})
+
 // test that saveChart overwrites a chart given the same index
 test("chart overwrites saved to localStorage", function(){
     // arrange:
@@ -51,7 +68,7 @@ test("chart overwrites saved to localStorage", function(){
     saveChart("testchart2")
     saveChart("testchart3", 0)
 
-    // assert that 'testchart' is in the array of charts
+    // assert that 'testchart1' is no longer in the array
     const savedChart = window.localStorage.getItem("savedCharts")
     expect(savedChart).not.toContain("testchart1")    
 })

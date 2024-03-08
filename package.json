@@ -8,6 +8,7 @@
     "cy:open": "cypress open"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^10.0.1",
     "css-loader": "^6.7.4",
     "cypress": "^13.6.6",
     "html-webpack-plugin": "^5.5.1",

@@ -4,7 +4,8 @@
   "description": "CS 362 Final Project",
   "scripts": {
     "build": "webpack",
-    "start": "webpack serve --open"
+    "start": "webpack serve --open",
+    "cy:open": "cypress open"
   },
   "devDependencies": {
     "css-loader": "^6.7.4",

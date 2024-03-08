@@ -52,10 +52,7 @@ test("consecutive charts saved to end of array", function(){
 
     // assert that 'testchart0-3' is in the array of charts
     const savedChart = window.localStorage.getItem("savedCharts")
-    expect(savedChart).toContain("testchart0")  
-    expect(savedChart).toContain("testchart1")
-    expect(savedChart).toContain("testchart2")
-    expect(savedChart).toContain("testchart3")  
+    expect(savedChart).toBe("[\"testchart0\",\"testchart1\",\"testchart2\",\"testchart3\"]")
 })
 
 // test that saveChart overwrites a chart given the same index

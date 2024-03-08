@@ -20,19 +20,38 @@ function initDomFromFiles(htmlPath, jsPath) {
 	})
 }
 
+beforeEach(() => {
+    window.localStorage.clear()
+})
+
 const chartStorage = require("./chartStorage")
 
 const saveChart = chartStorage.saveChart
 
 // test that saveChart stores the chart in the localStorage
-test("chart saved to localStorage", async function(){
+test("chart saved to localStorage", function(){
     // arrange:
     initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
 
     // act:    	
-    saveChart("testchart")
+    saveChart("testchart0")
 
     // assert that 'testchart' is in the array of charts
     const savedChart = window.localStorage.getItem("savedCharts")
     expect(savedChart).toContain("testchart")    
+})
+
+// test that saveChart overwrites a chart given the same index
+test("chart overwrites saved to localStorage", function(){
+    // arrange:
+    initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
+
+    // act:    	
+    saveChart("testchart1")
+    saveChart("testchart2")
+    saveChart("testchart3", 0)
+
+    // assert that 'testchart' is in the array of charts
+    const savedChart = window.localStorage.getItem("savedCharts")
+    expect(savedChart).not.toContain("testchart1")    
 })

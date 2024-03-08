@@ -25,6 +25,7 @@ beforeEach(() => {
 const chartStorage = require("./chartStorage")
 
 const saveChart = chartStorage.saveChart
+const loadAllSavedCharts = chartStorage.loadAllSavedCharts
 
 // test that saveChart stores the chart in the localStorage
 test("chart saved to localStorage", function(){
@@ -68,4 +69,19 @@ test("chart overwrites saved to localStorage", function(){
     // assert that 'testchart1' is no longer in the array
     const savedChart = window.localStorage.getItem("savedCharts")
     expect(savedChart).not.toContain("testchart1")    
+})
+
+// test that loadAllSavedCharts() returns the array of saved charts
+test("loadAllSavedCharts() produces the array of saved charts", function(){
+    // arrange:
+    initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
+
+    // act:    	
+    saveChart("testchart1")
+    saveChart("testchart2")
+    saveChart("testchart3")
+
+    // assert that 'testchart1' is no longer in the array
+    const outPut = loadAllSavedCharts()
+    expect(outPut).toStrictEqual(["testchart1","testchart2","testchart3"])    
 })

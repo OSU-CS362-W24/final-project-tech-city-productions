@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+require("2testing-library/cypress/add-commands")
+
+Cypress.Commands.add("createChart", function(title, Xlabel, Ylabel){
+    cy.findByText("Title").type(title)
+    cy.findByText("X label").type(Xlabel)
+    cy.findByText("Y label").type(Ylabel)
+})

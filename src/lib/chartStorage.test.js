@@ -88,7 +88,7 @@ test("loadAllSavedCharts() produces the array of saved charts", function(){
 })
 
 // test that loadSavedChart(idx) returns the second chart when idx = 1
-test("loadAllSavedCharts() produces the second chart when idx = 1", function(){
+test("loadSavedChart(idx) produces the second chart when idx = 1", function(){
     // arrange:
     initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
 
@@ -100,4 +100,17 @@ test("loadAllSavedCharts() produces the second chart when idx = 1", function(){
     // assert: that outPut is the second chart in array
     const outPut = loadSavedChart(1)
     expect(outPut).toBe("testchart2")    
+})
+
+// test that loadSavedChart(idx) returns the empty set when the array is empty
+test("loadSavedChart() returns the empty set when the array is empty", function(){
+    // arrange:
+    initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
+
+    // act:    	
+    // do nothing to test empty array
+    
+    // assert: that outPut is the empty set
+    const outPut = loadSavedChart(1)
+    expect(outPut).toStrictEqual({})    
 })

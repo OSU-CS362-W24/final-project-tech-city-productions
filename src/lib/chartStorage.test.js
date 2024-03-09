@@ -26,6 +26,7 @@ const chartStorage = require("./chartStorage")
 
 const saveChart = chartStorage.saveChart
 const loadAllSavedCharts = chartStorage.loadAllSavedCharts
+const loadSavedChart = chartStorage.loadSavedChart
 
 // test that saveChart stores the chart in the localStorage
 test("chart saved to localStorage", function(){
@@ -35,7 +36,7 @@ test("chart saved to localStorage", function(){
     // act:    	
     saveChart("testchart0")
 
-    // assert that 'testchart' is in the array of charts
+    // assert: that 'testchart' is in the array of charts
     const savedChart = window.localStorage.getItem("savedCharts")
     expect(savedChart).toContain("testchart")    
 })
@@ -51,7 +52,7 @@ test("consecutive charts saved to end of array", function(){
     saveChart("testchart2")
     saveChart("testchart3")
 
-    // assert that 'testchart0-3' is in the array of charts
+    // assert: that 'testchart0-3' is in the array of charts
     const savedChart = window.localStorage.getItem("savedCharts")
     expect(savedChart).toBe("[\"testchart0\",\"testchart1\",\"testchart2\",\"testchart3\"]")
 })
@@ -66,7 +67,7 @@ test("chart overwrites saved to localStorage", function(){
     saveChart("testchart2")
     saveChart("testchart3", 0)
 
-    // assert that 'testchart1' is no longer in the array
+    // assert: that 'testchart1' is no longer in the array
     const savedChart = window.localStorage.getItem("savedCharts")
     expect(savedChart).not.toContain("testchart1")    
 })
@@ -81,7 +82,22 @@ test("loadAllSavedCharts() produces the array of saved charts", function(){
     saveChart("testchart2")
     saveChart("testchart3")
 
-    // assert that 'testchart1' is no longer in the array
+    // assert: that outPut is the same as the array
     const outPut = loadAllSavedCharts()
     expect(outPut).toStrictEqual(["testchart1","testchart2","testchart3"])    
+})
+
+// test that loadSavedChart(idx) returns the second chart when idx = 1
+test("loadAllSavedCharts() produces the second chart when idx = 1", function(){
+    // arrange:
+    initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
+
+    // act:    	
+    saveChart("testchart1")
+    saveChart("testchart2")
+    saveChart("testchart3")
+
+    // assert: that outPut is the second chart in array
+    const outPut = loadSavedChart(1)
+    expect(outPut).toBe("testchart2")    
 })

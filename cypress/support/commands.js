@@ -24,10 +24,20 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-require("2testing-library/cypress/add-commands")
+require("@testing-library/cypress/add-commands")
 
 Cypress.Commands.add("createChart", function(title, Xlabel, Ylabel){
-    cy.findByText("Title").type(title)
+    cy.findByText("Chart title").type(title)
     cy.findByText("X label").type(Xlabel)
     cy.findByText("Y label").type(Ylabel)
+})
+
+Cypress.Commands.add("addValues", function(bool, xIdx, yIdx, xVal, yVal){
+    //TRUE means to add new values, it needs a new textbox.
+    if(bool === "TRUE"){
+        cy.findByRole("button", {name: "+"}).click()
+    }
+
+    cy.get(':nth-child(' + xIdx + ') > .x-value-input').type(xVal)
+    cy.get(':nth-child(' + yIdx + ') > .y-value-input').type(yVal)
 })

@@ -41,3 +41,8 @@ Cypress.Commands.add("addValues", function(bool, xIdx, yIdx, xVal, yVal){
     cy.get(':nth-child(' + xIdx + ') > .x-value-input').type(xVal)
     cy.get(':nth-child(' + yIdx + ') > .y-value-input').type(yVal)
 })
+
+Cypress.Commands.add("checkValues", function(xIdx, yIdx, xVal, yVal){
+    cy.get(':nth-child(' + xIdx + ') > .x-value-input').should("have.value", xVal)
+    cy.get(':nth-child(' + yIdx + ') > .y-value-input').should("have.value", yVal)
+})

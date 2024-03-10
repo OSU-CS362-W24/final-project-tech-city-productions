@@ -122,8 +122,7 @@ test("loadSavedChart() returns the empty set when the array is empty", function(
 test("updateCurrentChartData stores the data in current chart", function(){
     // arrange:
     initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
-
-    // act:    	
+        	
     const testChart = {
         type: "line",
         data: [{x:23,y:1}],
@@ -132,7 +131,8 @@ test("updateCurrentChartData stores the data in current chart", function(){
         title: "test-title",
         color: "#ff4500"
         }
-    
+
+    // act:
     updateCurrentChartData(testChart)
 
     // assert: currentChartData is equal to the testChart data
@@ -145,4 +145,44 @@ test("updateCurrentChartData stores the data in current chart", function(){
         title: "test-title",
         color: "#ff4500"
         })    
+})
+
+// test that loadCurrentChartData stores the data in current chart
+test("loadCurrentChartData stores the data in current chart", function(){
+    // arrange:
+    initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
+        	
+    const testChart = {
+        type: "line",
+        data: [{x:23,y:1}],
+        xLabel: "xLabel",
+        yLabel: "yLabel",
+        title: "test-title",
+        color: "#ff4500"
+        }
+        
+    // act:
+    updateCurrentChartData(testChart)
+
+    // assert: currentChartData is equal to the testChart data
+    expect(loadCurrentChartData()).toEqual({
+        type: "line",
+        data: [{x:23,y:1}],
+        xLabel: "xLabel",
+        yLabel: "yLabel",
+        title: "test-title",
+        color: "#ff4500"
+        })    
+})
+
+// test that loadCurrentChartData returns the empty set when no chart data
+test("loadCurrentChartData returns empty array when no data", function(){
+    // arrange:
+    initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
+        
+    // act:
+    // do nothing
+
+    // assert: returns empty set when currentChartData is empty
+    expect(loadCurrentChartData()).toEqual({})    
 })

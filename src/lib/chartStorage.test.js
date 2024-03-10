@@ -22,11 +22,14 @@ beforeEach(() => {
     window.localStorage.clear()
 })
 
+// make available all of the functions from chartStorage.js
 const chartStorage = require("./chartStorage")
-
+const { listenerCount } = require("process")
 const saveChart = chartStorage.saveChart
 const loadAllSavedCharts = chartStorage.loadAllSavedCharts
 const loadSavedChart = chartStorage.loadSavedChart
+const updateCurrentChartData = chartStorage.updateCurrentChartData
+const loadCurrentChartData = chartStorage.loadCurrentChartData
 
 // test that saveChart stores the chart in the localStorage
 test("chart saved to localStorage", function(){
@@ -109,8 +112,37 @@ test("loadSavedChart() returns the empty set when the array is empty", function(
 
     // act:    	
     // do nothing to test empty array
-    
+
     // assert: that outPut is the empty set
-    const outPut = loadSavedChart(1)
+    const outPut = loadSavedChart(0)
     expect(outPut).toStrictEqual({})    
+})
+
+// test that updateCurrentChartData stores the data in current chart
+test("updateCurrentChartData stores the data in current chart", function(){
+    // arrange:
+    initDomFromFiles(`${__dirname}/../index.html`, `${__dirname}/chartStorage.js`)
+
+    // act:    	
+    const testChart = {
+        type: "line",
+        data: [{x:23,y:1}],
+        xLabel: "xLabel",
+        yLabel: "yLabel",
+        title: "test-title",
+        color: "#ff4500"
+        }
+    
+    updateCurrentChartData(testChart)
+
+    // assert: currentChartData is equal to the testChart data
+    const updatedChart = JSON.parse(window.localStorage.getItem("currentChartData"))
+    expect(updatedChart).toEqual({
+        type: "line",
+        data: [{x:23,y:1}],
+        xLabel: "xLabel",
+        yLabel: "yLabel",
+        title: "test-title",
+        color: "#ff4500"
+        })    
 })

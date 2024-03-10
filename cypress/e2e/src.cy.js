@@ -7,6 +7,8 @@ it('Chart is correctly generated', () => {
   cy.visit('/')
   //Get link and click the link for Line to create a chart
   cy.findByRole("link", {name: "Line"}).click()
+  //Assert that Cypress press the correct link.
+  cy.findByText("Line Chart Builder").should("exist")
   //Create a title
   cy.createChart("Cats vs. Dogs", "Cats", "Dogs")
   //Enter values
@@ -24,10 +26,9 @@ it('Chart is correctly generated', () => {
 it('Chart data is maintained across pages', () => {
   //Visit Website...
   cy.visit('/')
-  
   //Get link and click the link for Line to create a chart
   cy.findByRole("link", {name: "Line"}).click()
-
+  cy.findByText("Line Chart Builder").should("exist")
   //Create a title
   cy.createChart("Cats vs. Dogs", "Cats", "Dogs")
   //Enter values
@@ -36,12 +37,13 @@ it('Chart data is maintained across pages', () => {
   cy.addValues("TRUE", "8", "9", "3", "15")
   cy.addValues("TRUE", "10", "11", "4", "25")
   cy.addValues("TRUE", "12", "13", "5", "40")
-  cy.findByRole("button", "+").click()
+  cy.findByRole("button", {name: "+"}).click()
 
   /* Assert that values are maintained across pages. */
   
   //Go to Scatter Chart Builder and check if the same numbers exists
   cy.findByRole("link", {name: "Scatter"}).click()
+  cy.findByText("Scatter Plot Builder").should("exist")
   cy.checkValues("4", "5", "1", "3")
   cy.checkValues("6", "7", "2", "7")
   cy.checkValues("8", "9", "3", "15")
@@ -49,6 +51,7 @@ it('Chart data is maintained across pages', () => {
   cy.checkValues("12", "13", "5", "40")
   //Go to Bar Chart Builder and check if the same number exists
   cy.findByRole("link", {name: "Bar"}).click()
+  cy.findByText("Bar Chart Builder").should("exist")
   cy.checkValues("4", "5", "1", "3")
   cy.checkValues("6", "7", "2", "7")
   cy.checkValues("8", "9", "3", "15")
@@ -56,6 +59,7 @@ it('Chart data is maintained across pages', () => {
   cy.checkValues("12", "13", "5", "40")
   //Go back to Line Chart Builder and check if the same number exists
   cy.findByRole("link", {name: "Line"}).click()
+  cy.findByText("Line Chart Builder").should("exist")
   cy.checkValues("4", "5", "1", "3")
   cy.checkValues("6", "7", "2", "7")
   cy.checkValues("8", "9", "3", "15")

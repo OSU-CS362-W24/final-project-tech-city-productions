@@ -24,7 +24,6 @@ beforeEach(() => {
 
 // make available all of the functions from chartStorage.js
 const chartStorage = require("./chartStorage")
-const { listenerCount } = require("process")
 const saveChart = chartStorage.saveChart
 const loadAllSavedCharts = chartStorage.loadAllSavedCharts
 const loadSavedChart = chartStorage.loadSavedChart

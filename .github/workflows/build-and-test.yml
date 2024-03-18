@@ -1,12 +1,15 @@
 name : Build and test
-on : [ push ] #workflow_call for reusability
+on : 
+  workflow_call: 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
       # https://github.com/marketplace/actions/checkout
       - uses : actions/checkout@v3
+      - uses : actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18
       - run : npm ci
+      - run : npm run build
       - run : npm test

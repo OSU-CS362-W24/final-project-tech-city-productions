@@ -5,6 +5,7 @@
   "scripts": {
     "build": "webpack",
     "start": "webpack serve --open",
+    "cy:open": "cypress open",
     "test": "jest"
   },
   "devDependencies": {
@@ -12,7 +13,6 @@
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/user-event": "^14.5.2",
     "@testing-library/cypress": "^10.0.1",
-    "cy:open": "cypress open",
     "css-loader": "^6.7.4",
     "cypress": "^13.6.6",
     "html-webpack-plugin": "^5.5.1",

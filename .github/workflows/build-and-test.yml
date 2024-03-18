@@ -1,6 +1,5 @@
 name : Build and test
-on : [ pull_request
-       push ] #workflow_call for reusability
+on : [ push ] #workflow_call for reusability
 jobs:
   build-and-test:
     runs-on: ubuntu-latest

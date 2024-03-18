@@ -1,7 +1,7 @@
 name: Deploy to GH Pages
 on:
   push:
-    branches: [main]
+    branches: [osumd-workflow-testing]
 jobs:
   build-and-test:
     uses: ./.github/workflows/build-and-test.yml

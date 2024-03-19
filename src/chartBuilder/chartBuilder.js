@@ -242,8 +242,8 @@ module.exports = function runChartBuilder(type) {
         }
 
         try {
-            const imgUrl = await generateChartImg(type, data, xLabel, yLabel, title, color)
             console.log("generate chart has been called with these params:", type, data, xLabel, yLabel, title, color);
+            const imgUrl = await generateChartImg(type, data, xLabel, yLabel, title, color)
             displayChartImg(imgUrl)
             updateSaveChartBtn("Save chart", false)
         } catch (e) {

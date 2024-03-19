@@ -9,21 +9,21 @@ function initDomFromFiles(htmlPath, jsPath) {
     document.open()
     document.write(html)
     document.close()
-    jest.isolateModules(function () {
+    /*jest.isolateModules(function () {
         require(jsPath)
-        })
+        })*/
+    require(jsPath)
 }
 
 require("@testing-library/jest-dom")
 const domTesting = require("@testing-library/dom")
 const exp = require("constants")
+const sortPoints = require("../lib/sortPoints.js")
 
 const userEvent = require("@testing-library/user-event").default
 
 
 
-require("../chartBuilder/chartBuilder.js")
-const genChartImg = require("../lib/generateChartImg.js")
 
 test("Video 1: Can add text to x/y input fields. New feilds are empty and don't affect old fields.", async function () {
     initDomFromFiles(
@@ -195,7 +195,6 @@ test("Video 1: Can add text to x/y input fields. New feilds are empty and don't 
 
                 //find the color input thingy
                 await user.click(colorInput);
-                console.log(colorInput);
 
                 expect(colorInput).toHaveValue("#ff4500");
                 
@@ -272,7 +271,6 @@ test("Video 1: Can add text to x/y input fields. New feilds are empty and don't 
     
                     //find the color input thingy
                     await user.click(colorInput);
-                    console.log(colorInput);
     
                     expect(colorInput).toHaveValue("#ff4500");
                     
@@ -282,32 +280,38 @@ test("Video 1: Can add text to x/y input fields. New feilds are empty and don't 
     
                 //GENERATING THE CHART
 
-                //make spy on generatechartimg
-                const genChartImgSpy = jest.spyOn(genChartImg, 'generateChartImg');
-                genChartImgSpy.mockImplementation(function(){
+                jest.mock("../lib/generateChartImg.js")
+
+                const generateChartImgSpy = require("../lib/generateChartImg.js")
+
+                generateChartImgSpy.mockImplementation(function(type, data, xLabel, yLabel, title, color){
                     return "http://placekitten.com/480/480";
                 })
 
-                const alertSpy = jest.spyOn(window, 'alert');
-
 
                 //click generate button
-                expect(genChartImgSpy()).toBe("http://placekitten.com/480/480");// just checking the mock output here
 
                 await user.click(generateChartBtn); // now clicking the generate chart button
-                console.log("Print calls of the genchartImgspy to see if clicking the button correctly calls it: \n",genChartImgSpy.mock.calls);
-                console.log("Calls of alert():", alertSpy.mock.calls);
+                
 
-              
+                
+                let data = [];
 
-                //expect(genChartImgSpy).toHaveBeenCalledWith(xyInputs, xLabelField, yLabelField, charTitleField, colorInput);
-                expect(genChartImgSpy).toHaveBeenCalled();
+                // Iterate over the numbers two at a time
+                for (let i = 0; i < xyInputs.length; i += 2) {
+                    // Push an object with x and y properties to the data array
+                    data.push({ x: xyInputs[i].value.toString(), y: xyInputs[i+1].value.toString() });
+                }
 
+                //sort the points using the same function chartBuilder uses.
+                sortPoints(data)
+                
+                expect(generateChartImgSpy).toHaveBeenCalledWith("line",data, xLabelField.value, yLabelField.value, charTitleField.value, colorInput.value);
 
-
-                    
-            
-       
+                //after checking that the button correctly calls generateChart with the right values,
+                //we check if our stub is returning the right value
+                
+                expect(generateChartImgSpy()).toBe("http://placekitten.com/480/480");
     
          
                     

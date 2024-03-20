@@ -206,7 +206,7 @@ module.exports = function runChartBuilder(type) {
         const labelElem = document.createElement("label")
         labelElem.classList.add(`${lowerXOrY}-value`)
         const inputType = (type === "bar" && lowerXOrY === "x") ? "" : "type='number'"
-        labelElem.innerHTML = `${upperXOrY} <input ${inputType} class="${lowerXOrY}-value-input" />`
+        labelElem.innerHTML = `${upperXOrY} <input ${inputType} class="${lowerXOrY}-value-input" data-testid="x-y-input" />`
         return labelElem
     }
 
@@ -242,6 +242,7 @@ module.exports = function runChartBuilder(type) {
         }
 
         try {
+            console.log("generate chart has been called with these params:", type, data, xLabel, yLabel, title, color);
             const imgUrl = await generateChartImg(type, data, xLabel, yLabel, title, color)
             displayChartImg(imgUrl)
             updateSaveChartBtn("Save chart", false)

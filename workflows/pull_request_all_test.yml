@@ -1,0 +1,23 @@
+name: pull_request_all_test
+on : [workflow_call]
+jobs:
+  pull_request_all_test:
+    runs-on: ubuntu-latest
+    env:
+      API_PORT: 8080
+    steps:
+      - uses : actions/checkout@v3
+      - uses : actions/setup-node@v3
+        with:
+            node-version: 20
+      - run : npm ci
+      - uses: JarvusInnovations/background-action@v1.0.5
+        name: Webpack Server Localhost Background Process
+        with: 
+          run : npm run start
+          wait-on: http://localhost:${{ env.API_PORT }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: cypress/videos/
+      - run : npm run cy:run
+      - run : npm run test

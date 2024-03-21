@@ -1,7 +1,8 @@
-name: build-and-serve
-on: [workflow_call]
+name: all_test
+on :
+  workflow_call
 jobs:
-  build-and-serve:
+  all_test:
     runs-on: ubuntu-latest
     env:
       API_PORT: 8080
@@ -16,3 +17,8 @@ jobs:
         with: 
           run : npm run start
           wait-on: http://localhost:${{ env.API_PORT }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: cypress/videos/
+      - run : npm run cy:run
+      - run : npm run test

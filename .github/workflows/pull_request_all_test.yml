@@ -1,7 +1,7 @@
 name: pull_request_all_test
-on: [push]
+on : [workflow_call]
 jobs:
-  webpack-serve:
+  pull_request_all_test:
     runs-on: ubuntu-latest
     env:
       API_PORT: 8080

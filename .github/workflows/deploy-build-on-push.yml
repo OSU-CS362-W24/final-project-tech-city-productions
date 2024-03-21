@@ -1,12 +1,10 @@
 name: Deploy to GH Pages
-on:
-  push:
-    branches: [main]
+on: [push]
 jobs:
-  build-and-test:
-    uses: ./.github/workflows/build-and-test.yml
-    with:
-      upload-pages-artifact: true
+  build-and-save-artifact:
+    uses: ./.github/workflows/build_on_push_artifact.yml
+  all-test:
+    uses: ./.github/workflows/all_test.yml
   deploy-to-pages:
     needs: build-and-test
     runs-on: ubuntu-latest

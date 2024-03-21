@@ -7,7 +7,6 @@ on :
         required: false 
 jobs:
   run-cypress-test:
-    needs: build-and-serve
     runs-on: ubuntu-latest
     steps:
       # https://github.com/marketplace/actions/checkout

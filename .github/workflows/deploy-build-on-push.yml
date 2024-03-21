@@ -6,7 +6,8 @@ jobs:
   all-test:
     uses: ./.github/workflows/all_test.yml
   deploy-to-pages:
-    needs: build-and-test
+    needs: build-and-save-artifact
+    needs: all-test
     runs-on: ubuntu-latest
     permissions:
       pages: write

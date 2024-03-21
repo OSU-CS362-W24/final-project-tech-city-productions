@@ -13,6 +13,6 @@ jobs:
       - run : npm run build
       - uses: actions/upload-artifact@v3
         with:
-        name: build files
+        name: build_files
         path: dist
 

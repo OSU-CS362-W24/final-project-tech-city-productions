@@ -4,7 +4,7 @@ jobs:
   build-and-serve:
     runs-on: ubuntu-latest
     env:
-      API_PORT: 1212
+      API_PORT: 8080
     steps:
       - uses : actions/checkout@v3
       - uses : actions/setup-node@v3
@@ -15,3 +15,4 @@ jobs:
         name: Webpack Server Localhost Background Process
         with: 
           run : npm run start
+          wait-on: http://localhost:${{ env.API_PORT }}

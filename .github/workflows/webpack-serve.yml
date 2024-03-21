@@ -10,4 +10,12 @@ jobs:
           node-version: 20
       - run : npm ci
       - run : npm run build
-      - run : npm run start
+      - name: Start Server
+        run : npm run start
+        background: true
+      - name: Wait for server to start
+        run: |
+          timeout 30s bash -c 'until printf "" 2>>/dev/null >>/dev/tcp/localhost/3000; do sleep 1; done'
+          echo "Server is up and running"
+      - name: Test server endpoint
+        run: curl -IsS http://localhost:3000/ | head -n 1 | grep "200 OK" && echo "Server is running successfully" || exit 1

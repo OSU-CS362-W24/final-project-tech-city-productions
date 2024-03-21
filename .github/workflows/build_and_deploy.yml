@@ -3,6 +3,12 @@ on : [push]
 jobs:
   build_on_push_artifact:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses : actions/checkout@v3
       - uses : actions/setup-node@v3
@@ -14,17 +20,8 @@ jobs:
         with:
           name: built_files
           path: dist/
-  deploy-to-pages:
-    needs: build_on_push_artifact
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - uses: actions/configure-pages@v3
       - uses: actions/deploy-pages@v3
         id: deployment
+      
   

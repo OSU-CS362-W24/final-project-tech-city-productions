@@ -16,9 +16,9 @@ jobs:
         with: 
           run : npm run start
           wait-on: http://localhost:${{ env.API_PORT }}
-      uses: ./.github/workflows/run-cypress-test.yml
-      with:
-        upload-pages-artifact: true
+      - uses: ./.github/workflows/run-cypress-test.yml
+        with:
+          upload-pages-artifact: true
 
     
     

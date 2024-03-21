@@ -16,19 +16,9 @@ jobs:
         with: 
           run : npm run start
           wait-on: http://localhost:${{ env.API_PORT }}
-  cypress-run:
-    needs: webpack-serve
-    uses: ./.github/workflows/run-cypress-test.yml
-    with:
-      upload-pages-artifact: true
-  non_dependency:
-    runs-on: ubuntu-latest
-    steps:
-      - uses : actions/checkout@v3
-      - uses : actions/setup-node@v3
-        with:
-          node-version: 20
-      - run : npm ci
+      uses: ./.github/workflows/run-cypress-test.yml
+      with:
+        upload-pages-artifact: true
 
     
     

@@ -6,7 +6,7 @@ on :
         type: boolean
         required: false 
 jobs:
-  build-and-test:
+  run-cypress-test:
     needs: build-and-serve
     runs-on: ubuntu-latest
     steps:

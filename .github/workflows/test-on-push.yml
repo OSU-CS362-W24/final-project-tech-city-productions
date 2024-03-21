@@ -4,6 +4,7 @@ jobs:
   webpack-serve:
     uses: ./.github/workflows/webpack-serve.yml
   cypress-run:
+    needs: webpack-serve
     uses: ./.github/workflows/run-cypress-test.yml
     with:
       upload-pages-artifact: true

@@ -1,6 +1,5 @@
 name: Deploy to GH Pages
 on: [push]
-name: Deploy  to GH Pages
 jobs:
   build-and-test:
     uses: ./.github/workflows/build-and-test.yml

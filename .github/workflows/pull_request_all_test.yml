@@ -1,7 +1,5 @@
 name: pull_request_all_test
 on:
-  pull_request:
-    branches: [osumd-workflow-testing]
   push: [osumd-workflow-testing]
 jobs:
   webpack-serve:

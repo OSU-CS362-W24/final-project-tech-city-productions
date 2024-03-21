@@ -10,9 +10,9 @@ jobs:
           node-version: 20
       - run : npm ci
       - run : npm run build
-      - name: Start Server
+      - name: serve-to-localhost
+        uses: JarvusInnovations/background-action@v1.0.5
         run : npm run start
-        background: true
       - name: Wait for server to start
         run: |
           timeout 30s bash -c 'until printf "" 2>>/dev/null >>/dev/tcp/localhost/3000; do sleep 1; done'

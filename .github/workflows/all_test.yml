@@ -1,6 +1,5 @@
 name: all_test
-on :
-  workflow_call
+on : [pull_request, push]
 jobs:
   all_test:
     runs-on: ubuntu-latest

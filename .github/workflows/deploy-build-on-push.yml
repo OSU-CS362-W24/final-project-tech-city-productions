@@ -1,10 +1,8 @@
 name: Deploy to GH Pages
-on: [push]
+on: [push,pull_request]
 jobs:
   build-and-save-artifact:
     uses: ./.github/workflows/build_on_push_artifact.yml
-  all-test:
-    uses: ./.github/workflows/all_test.yml
   deploy-to-pages:
     runs-on: ubuntu-latest
     needs: build-and-save-artifact

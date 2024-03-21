@@ -2,7 +2,20 @@ name: test-on-push
 on : [push]
 jobs:
   webpack-serve:
-    uses: ./.github/workflows/webpack-serve.yml
+  runs-on: ubuntu-latest
+  env:
+    API_PORT: 8080
+  steps:
+    - uses : actions/checkout@v3
+    - uses : actions/setup-node@v3
+      with:
+          node-version: 20
+    - run : npm ci
+    - uses: JarvusInnovations/background-action@v1.0.5
+      name: Webpack Server Localhost Background Process
+      with: 
+        run : npm run start
+        wait-on: http://localhost:${{ env.API_PORT }}
   cypress-run:
     needs: webpack-serve
     uses: ./.github/workflows/run-cypress-test.yml

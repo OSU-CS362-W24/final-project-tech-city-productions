@@ -16,9 +16,10 @@ jobs:
         with: 
           run : npm run start
           wait-on: http://localhost:${{ env.API_PORT }}
-      - uses: ./.github/workflows/run-cypress-test.yml
+      - uses: actions/upload-pages-artifact@v3
         with:
-          upload-pages-artifact: true
+          path: cypress/videos/
+      - run : npm run cy:run
 
     
     

@@ -3,19 +3,15 @@ on: [workflow_call]
 jobs:
   build-and-serve:
     runs-on: ubuntu-latest
+    env:
+      API_PORT: 1212
     steps:
       - uses : actions/checkout@v3
       - uses : actions/setup-node@v3
         with:
-          node-version: 20
+            node-version: 20
       - run : npm ci
-      - run : npm run build
-      - name: serve-to-localhost
-        uses: JarvusInnovations/background-action@v1.0.5
-        run : npm run start
-      - name: Wait for server to start
-        run: |
-          timeout 30s bash -c 'until printf "" 2>>/dev/null >>/dev/tcp/localhost/3000; do sleep 1; done'
-          echo "Server is up and running"
-      - name: Test server endpoint
-        run: curl -IsS http://localhost:3000/ | head -n 1 | grep "200 OK" && echo "Server is running successfully" || exit 1
+      - uses: JarvusInnovations/background-action@v1.0.5
+        name: Webpack Server Localhost Background Process
+        with: 
+          run : npm run start

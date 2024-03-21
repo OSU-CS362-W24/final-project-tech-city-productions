@@ -1,5 +1,8 @@
 name: test-on-push
 on : [push]
 jobs:
-  build-and-test:
-    uses: ./.github/workflows/build-and-test.yml
+  webpack-serve:
+    uses: ./.github/workflows/webpack-serve.yml
+    uses: ./.github/workflows/run-cypress-test.yml
+    
+    

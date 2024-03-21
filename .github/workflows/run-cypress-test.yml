@@ -1,4 +1,4 @@
-name : Build and test
+name : run-cypress-test
 on : 
   workflow_call:
     inputs:
@@ -7,6 +7,7 @@ on :
         required: false 
 jobs:
   build-and-test:
+    needs: build-and-serve
     runs-on: ubuntu-latest
     steps:
       # https://github.com/marketplace/actions/checkout
@@ -15,9 +16,8 @@ jobs:
         with:
           node-version: 20
       - run : npm ci
-      - run : npm run build
       - if: ${{ inputs.upload-pages-artifact }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: cypress/videos/
-      - run : npm test
+      - run : npm run cy:run

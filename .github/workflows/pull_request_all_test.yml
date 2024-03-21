@@ -10,6 +10,7 @@ jobs:
       - uses : actions/setup-node@v3
         with:
             node-version: 20
+      - run : npm install
       - run : npm ci
       - uses: JarvusInnovations/background-action@v1.0.5
         name: Webpack Server Localhost Background Process

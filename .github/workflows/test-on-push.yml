@@ -3,6 +3,10 @@ on : [push]
 jobs:
   webpack-serve:
     uses: ./.github/workflows/webpack-serve.yml
+  cypress:
+    needs: webpack-serve
     uses: ./.github/workflows/run-cypress-test.yml
+    with:
+      upload-pages-artifact: true
     
     

@@ -32,6 +32,7 @@ test("Video 1: Can add text to x/y input fields. New feilds are empty and don't 
     )
     //get all xyinput fields
     xyInputFields = domTesting.getAllByTestId(document, "x-y-input");
+    
     const addFieldButton = domTesting.getByText(document, "+");
 
     const user = userEvent.setup();
@@ -96,6 +97,9 @@ test("Video 1: Can add text to x/y input fields. New feilds are empty and don't 
         //Click Generate chart
         //TODO: CHECK IF WINDOW.ALERT is the right name
         const alertSpy = jest.spyOn(window, 'alert');
+        alertSpy.mockImplementation(function(alertMessage){
+            console.log(alertMessage);
+        })
         
         await user.click(generateChartBtn);
 
@@ -144,6 +148,9 @@ test("Video 1: Can add text to x/y input fields. New feilds are empty and don't 
         
             //Click Generate chart
             const alertSpy = jest.spyOn(window, 'alert');
+            alertSpy.mockImplementation(function(alertMessage){
+                console.log(alertMessage);
+            })
             
             await user.click(generateChartBtn);
     
